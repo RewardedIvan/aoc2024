@@ -2,6 +2,7 @@ use std::io;
 use std::io::Write;
 
 mod day1;
+mod day2;
 
 fn main() {
     print!("Day "); io::stdout().flush().expect("flush failed");
@@ -12,6 +13,7 @@ fn main() {
     input_str.pop();
     match input_str.parse::<i32>().expect("not a valid number") {
         1 => day1::day1(),
+        2 => day2::day2(),
         _ => println!("day not implemented / doesn't exist")
     }
 }
