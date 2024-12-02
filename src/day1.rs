@@ -1,4 +1,5 @@
 use std::io;
+use std::collections::HashMap;
 
 pub fn day1() {
     let mut cols = [
@@ -41,10 +42,20 @@ pub fn day1() {
     }
 
     let mut sum = 0;
+    let mut dups = HashMap::<i32, i32>::new();
     for i in 0..cols[0].len() {
         let a = cols[0][i];
         let b = cols[1][i];
         let distance = a.abs_diff(b);
+
+        match dups.get_mut(&b) {
+            Some(count) => {
+                *count += 1;
+            },
+            None => {
+                dups.insert(b, 1);
+            }
+        }
 
         //println!("distance between {} and {} = {}", a, b, distance);
 
@@ -52,4 +63,10 @@ pub fn day1() {
     }
 
     println!("sum of distances: {}", sum);
+
+    let mut similarity_score = 0;
+    for e in cols[0].iter() {
+        similarity_score += e * dups.get(&e).unwrap_or(&0);
+    }
+    println!("similarity score: {}", similarity_score);
 }
