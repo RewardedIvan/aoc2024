@@ -1,6 +1,6 @@
 use std::io;
 
-pub fn two_col_input() -> [Vec<i32>; 2] {
+pub fn day1() {
     let mut cols = [
         Vec::<i32>::new(),
         Vec::<i32>::new()
@@ -40,22 +40,16 @@ pub fn two_col_input() -> [Vec<i32>; 2] {
         }
     }
 
-    return cols;
-}
-
-pub fn day1() {
-    let cols = two_col_input();
-
     let mut sum = 0;
     for i in 0..cols[0].len() {
         let a = cols[0][i];
         let b = cols[1][i];
         let distance = a.abs_diff(b);
 
-        println!("Distance between {} and {} = {}", a, b, distance);
+        //println!("distance between {} and {} = {}", a, b, distance);
 
         sum += distance;
     }
 
-    println!("Sum of distances: {}", sum);
+    println!("sum of distances: {}", sum);
 }
