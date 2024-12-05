@@ -4,6 +4,7 @@ pub fn day5() {
     println!("Enter the page ordering rules, then empty line, then pages to produce in each update, to exit enter END");
 
     let mut sum = 0;
+    let mut sum_fixed = 0;
     let mut rules = Vec::<(i32, i32)>::new();
     let mut ordering_rules = true;
     loop {
@@ -36,23 +37,38 @@ pub fn day5() {
                 .collect::<Vec<i32>>();
 
             let mut violation = false;
-            for r in &rules {
-                let a_idx = numbers.iter().position(|n| *n == r.0);
-                let b_idx = numbers.iter().position(|n| *n == r.1);
+            let mut fixed = numbers.clone();
+            let mut violation_repeat = true;
+            while violation_repeat {
+                violation_repeat = false;
+                for r in &rules {
+                    // note a and b are indexes
+                    let a_opt = fixed.iter().position(|n| *n == r.0);
+                    let b_opt = fixed.iter().position(|n| *n == r.1);
 
-                if a_idx.is_some() && b_idx.is_some() {
-                    if a_idx.unwrap() > b_idx.unwrap() {
-                        violation = true;
+                    if a_opt.is_some() && b_opt.is_some() {
+                        let a = a_opt.unwrap();
+                        let b = b_opt.unwrap();
+
+                        if a >= b {
+                            violation = true;
+                            violation_repeat = true;
+                            fixed.swap(a, b);
+                            //println!("{:?}, {a} {b}", fixed);
+                        }
                     }
                 }
             }
 
-            //println!("{:?} {} {}", numbers, !violation, numbers[numbers.len() / 2]);
+            //println!("{:?} {} {}", fixed, !violation, fixed[fixed.len() / 2]);
             if !violation {
                 sum += numbers[numbers.len() / 2];
+            } else {
+                sum_fixed += fixed[fixed.len() / 2];
             }
         }
     }
     
     println!("sum of the middle page numbers: {}", sum);
+    println!("sum of the middle page numbers on fixed: {}", sum_fixed);
 }
