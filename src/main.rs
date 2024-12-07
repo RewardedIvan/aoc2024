@@ -7,6 +7,7 @@ mod day3;
 mod day4;
 mod day5;
 mod day6;
+mod day7;
 
 fn main() {
     print!("Day "); io::stdout().flush().expect("flush failed");
@@ -22,6 +23,7 @@ fn main() {
         4 => day4::day4(),
         5 => day5::day5(),
         6 => day6::day6(),
+        7 => day7::day7(),
         _ => println!("day not implemented / doesn't exist")
     }
 }
